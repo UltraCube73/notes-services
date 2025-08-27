@@ -22,6 +22,8 @@ if(!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UsePathBase(builder.Configuration["PathBase"]);
+
 app.UseHttpsRedirection();
 
 app.UseRouting();
