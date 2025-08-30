@@ -33,6 +33,8 @@ app.UseAuthorization();
 app.MapStaticAssets();
 
 app.MapRazorPages()
-   .WithStaticAssets();
+  .WithStaticAssets();
+
+app.MapControllerRoute(name: "default", pattern: "{controller=Auth}/{action}");
 
 app.Run();
