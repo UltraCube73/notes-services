@@ -1,16 +1,28 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.DataProtection;
+using UserService.Data.Model;
 
-namespace UserService
+namespace UserService.Data
 {
-    public class AppDbContext : DbContext
+    public class UserDbContext : DbContext
     {
-        private IDataProtectionProvider dataProtectionProvider;
+        private readonly IDataProtectionProvider _dataProtectionProvider;
 
-        public AppDbContext(DbContextOptions<AppDbContext> options, IDataProtectionProvider dataProtectionProvider) : base(options)
+        public UserDbContext(DbContextOptions<UserDbContext> options, IDataProtectionProvider dataProtectionProvider) : base(options)
         {
-            this.dataProtectionProvider = dataProtectionProvider;
+            _dataProtectionProvider = dataProtectionProvider;
             Database.EnsureCreated();
+        }
+
+        public DbSet<User> Users { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<User>(model =>
+            {
+                model.Property(x => x.Nickname).HasColumnType("bytea").HasConversion(new EncryptedConverter(_dataProtectionProvider));
+            });
         }
     }
 }

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.DataProtection;
 
-namespace UserService
+namespace UserService.Data
 {
     public class DataProtection
     {

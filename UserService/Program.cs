@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
-using UserService;
+using UserService.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContextPool<AppDbContext>(opt => 
-  opt.UseNpgsql(builder.Configuration.GetConnectionString("UserDatabase")));
+builder.Services.AddDbContextPool<UserDbContext>(opt => 
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("UserDatabase")));
 builder.Services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(AppContext.BaseDirectory, "keys"))).SetApplicationName("Notes");
 builder.Services.AddScoped<DataProtection>();
 
