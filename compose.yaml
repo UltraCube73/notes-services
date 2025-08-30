@@ -19,6 +19,11 @@ services:
     hostname: notes-auth-service
     volumes:
       - ./AuthServiceSettings.json:/app/appsettings.json:ro
+  user-service:
+    build: ./UserService
+    hostname: notes-user-service
+    volumes:
+      - ./UserServiceSettings.json:/app/appsettings.json:ro
 
 volumes:
   notes-data:
