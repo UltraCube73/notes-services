@@ -16,14 +16,28 @@ services:
       - 5432:5432
   auth-service:
     build: ./AuthService
-    hostname: notes-auth-service
+    hostname: auth-service
     volumes:
       - ./AuthServiceSettings.json:/app/appsettings.json:ro
+  notes-service:
+    build: ./NotesService
+    hostname: notes-service
+    volumes:
+      - ./NotesServiceSettings.json:/app/appsettings.json:ro
+      - dpkeys:/root/.aspnet/DataProtection-Keys
+  notes-fe-service:
+    build: ./NotesFEService
+    hostname: notes-fe-service
+    volumes:
+      - ./NotesFEServiceSettings.json:/app/appsettings.json:ro
+      - dpkeys:/root/.aspnet/DataProtection-Keys
   user-service:
     build: ./UserService
-    hostname: notes-user-service
+    hostname: user-service
     volumes:
       - ./UserServiceSettings.json:/app/appsettings.json:ro
+      - dpkeys:/root/.aspnet/DataProtection-Keys
 
 volumes:
   notes-data:
+  dpkeys:
