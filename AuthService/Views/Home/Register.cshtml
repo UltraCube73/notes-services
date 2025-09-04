@@ -1,5 +1,5 @@
-﻿@{
-    ViewData["Title"] = "Вход";
+@{
+    ViewData["Title"] = "Регистрация";
 }
 
 <div class="container">
@@ -10,13 +10,21 @@
                 <input class="form-control" type="text" asp-route="login"/>
             </div>
             <div class="form-group mt-1">
+                <label class="control-label col-sm-2" for="Login">Почта:</label>
+                <input class="form-control" type="text" asp-route="email"/>
+            </div>
+            <div class="form-group mt-1">
                 <label class="control-label col-sm-2" for="Password">Пароль:</label>
                 <input class="form-control" type="password" asp-route="password"/>
             </div>
-            <input class="btn btn-primary mt-1" type="submit" value="Вход">
+            <div class="form-group mt-1">
+                <label class="control-label col-sm-2" for="Password">Повтор:</label>
+                <input class="form-control" type="password" asp-route="password-repeat"/>
+            </div>
+            <input class="btn btn-primary mt-1" type="submit" value="Зарегистрироваться">
             <br>
             <input class="btn btn-primary mt-1" type="button"
-            value="Регистрация"
+            value="Вход"
             onclick="location.href='@Url.Action("Register")'"/>
         </div>
     </form>
