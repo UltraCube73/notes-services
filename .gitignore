@@ -1,5 +1,2 @@
 database.env
-AuthServiceSettings.json
-UserServiceSettings.json
-NotesServiceSettings.json
-NotesFEServiceSettings.json
+config/

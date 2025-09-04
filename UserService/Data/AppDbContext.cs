@@ -22,6 +22,7 @@ namespace UserService.Data
             modelBuilder.Entity<User>(model =>
             {
                 model.Property(x => x.Nickname).HasColumnType("bytea").HasConversion(new EncryptedConverter(_dataProtectionProvider));
+                model.Property(x => x.Email).HasColumnType("bytea").HasConversion(new EncryptedConverter(_dataProtectionProvider));
             });
         }
     }

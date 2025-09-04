@@ -18,24 +18,23 @@ services:
     build: ./AuthService
     hostname: auth-service
     volumes:
-      - ./AuthServiceSettings.json:/app/appsettings.json:ro
+      - ./config/AuthServiceSettings.json:/app/appsettings.json:ro
   notes-service:
     build: ./NotesService
     hostname: notes-service
     volumes:
-      - ./NotesServiceSettings.json:/app/appsettings.json:ro
+      - ./config/NotesServiceSettings.json:/app/appsettings.json:ro
       - dpkeys:/root/.aspnet/DataProtection-Keys
   notes-fe-service:
     build: ./NotesFEService
     hostname: notes-fe-service
     volumes:
-      - ./NotesFEServiceSettings.json:/app/appsettings.json:ro
-      - dpkeys:/root/.aspnet/DataProtection-Keys
+      - ./config/NotesFEServiceSettings.json:/app/appsettings.json:ro
   user-service:
     build: ./UserService
     hostname: user-service
     volumes:
-      - ./UserServiceSettings.json:/app/appsettings.json:ro
+      - ./config/UserServiceSettings.json:/app/appsettings.json:ro
       - dpkeys:/root/.aspnet/DataProtection-Keys
 
 volumes:
