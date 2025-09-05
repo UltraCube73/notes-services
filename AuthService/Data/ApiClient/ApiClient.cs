@@ -26,10 +26,11 @@ namespace AuthService.Data
 
         public async Task<ApiQueryResult> Register(UserRegistrationInfo user)
         {
+            Uri uri = new Uri(new Uri(url), "register");
             HttpResponseMessage response;
-            response = await client.PostAsJsonAsync(new Uri(new Uri(url), "/register"), user);
+            response = await client.PostAsJsonAsync(uri, user);
             if(response.StatusCode == System.Net.HttpStatusCode.OK) return new ApiQueryResult(true);
-            else throw new Exception($"API service {url} returned non-200 status code");
+            else throw new Exception($"API service {uri} returned status code {((int)response.StatusCode)}.");
         }
     }
 }
