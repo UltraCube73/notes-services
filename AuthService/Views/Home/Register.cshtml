@@ -1,3 +1,4 @@
+@model AuthService.Data.Models.Views.Register
 @{
     ViewData["Title"] = "Регистрация";
 }
@@ -5,21 +6,24 @@
 <div class="container">
     <form class="form-horizontal col-sm-5" asp-action="Login">
         <div class="form-center">
+            @if(Model.Message != null) {
+                <label class="control-label" style="text-align: center;" asp-for="Message">@Model.Message</label>
+            }
             <div class="form-group">
                 <label class="control-label col-sm-2" for="Login">Логин:</label>
-                <input class="form-control" type="text" asp-route="login"/>
+                <input class="form-control" type="text" asp-for="Login"/>
             </div>
             <div class="form-group mt-1">
                 <label class="control-label col-sm-2" for="Login">Почта:</label>
-                <input class="form-control" type="text" asp-route="email"/>
+                <input class="form-control" type="text" asp-for="Email"/>
             </div>
             <div class="form-group mt-1">
                 <label class="control-label col-sm-2" for="Password">Пароль:</label>
-                <input class="form-control" type="password" asp-route="password"/>
+                <input class="form-control" type="password" asp-for="Password"/>
             </div>
             <div class="form-group mt-1">
                 <label class="control-label col-sm-2" for="Password">Повтор:</label>
-                <input class="form-control" type="password" asp-route="password-repeat"/>
+                <input class="form-control" type="password" asp-for="PasswordRepeat"/>
             </div>
             <input class="btn btn-primary mt-1" type="submit" value="Зарегистрироваться">
             <br>

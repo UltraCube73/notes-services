@@ -13,19 +13,23 @@ namespace AuthService.Data
             url = apiUrl;
         }
 
-        public ApiQueryResult CheckIfUserExists(User user)
+        public async Task<ApiQueryResult> CheckIfUserExists(User user)
         {
-            return new ApiQueryResult(true, "ok");
+            //HttpResponseMessage response = await client.GetAsync(new Uri(url, ""));
+            return new ApiQueryResult(true);
         }
 
-        public ApiQueryResult Login(User user)
+        public async Task<ApiQueryResult> Login(User user)
         {
-            return new ApiQueryResult(true, "ok");
+            return new ApiQueryResult(true);
         }
 
-        public ApiQueryResult Register(User user)
+        public async Task<ApiQueryResult> Register(UserRegistrationInfo user)
         {
-            return new ApiQueryResult(true, "ok");
+            HttpResponseMessage response;
+            response = await client.PostAsJsonAsync(new Uri(new Uri(url), "/register"), user);
+            if(response.StatusCode == System.Net.HttpStatusCode.OK) return new ApiQueryResult(true);
+            else throw new Exception($"API service {url} returned non-200 status code");
         }
     }
 }
