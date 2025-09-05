@@ -1,7 +1,10 @@
+using AuthService.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSingleton<IApiClient>(x => new ApiClient(builder.Configuration["UserApiBaseUrl"]!));
 
 builder.WebHost.UseWebRoot("wwwroot").UseStaticWebAssets();
 

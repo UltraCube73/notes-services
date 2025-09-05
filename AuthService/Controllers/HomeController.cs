@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using AuthService.Models;
+using AuthService.Data;
 
 namespace AuthService.Controllers;
 
@@ -13,9 +13,10 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    public IActionResult Index()
+    public IActionResult Index(Data.Models.Views.Index? data)
     {
-        return View();
+        if(data == null) return View(new Data.Models.Views.Index());
+        else return View(new Data.Models.Views.Index() { Message = "post" });
     }
 
     public IActionResult Register()
@@ -26,6 +27,6 @@ public class HomeController : Controller
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        return View(new Data.Models.Views.ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
