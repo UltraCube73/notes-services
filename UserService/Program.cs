@@ -26,8 +26,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 builder.Services.AddDbContextPool<UserDbContext>(opt => 
     opt.UseNpgsql(builder.Configuration.GetConnectionString("UserDatabase")));
-builder.Services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(AppContext.BaseDirectory, "keys"))).SetApplicationName("UserService");
-builder.Services.AddScoped<DataProtection>();
 
 var app = builder.Build();
 

@@ -67,7 +67,7 @@ public class HomeController : Controller
     [HttpPost]
     public async Task<IActionResult> Register(Data.Models.Views.Register data)
     {
-        if(data.Email != null) data.Email = data.Email.Trim();
+        if(data.Email != null) data.Email = data.Email.Trim().ToLower();
         if(data.Login != null) data.Login = data.Login.Trim();
         if (data.Email == null || data.Login == null || data.Password == null || data.PasswordRepeat == null || data.Email == "" || data.Login == "")
         {
@@ -99,7 +99,7 @@ public class HomeController : Controller
 
         UserExistenceInfo userExistenceInfo = await _apiClient.CheckIfUserExists(new UserEmailLoginInfo() { Email = data.Email!, Login = data.Login! });
         if (userExistenceInfo.LoginExists) data.Message = "Логин занят!";
-        if (userExistenceInfo.EmailExists) data.Message = "Почта уже зарегистрирована!";
+        else if (userExistenceInfo.EmailExists) data.Message = "Почта уже зарегистрирована!";
         else
         {
             UserLoginResultInfo info = await _apiClient.Register(new UserRegistrationInfo() { Email = data.Email!, Password = data.Password!, Login = data.Login! });

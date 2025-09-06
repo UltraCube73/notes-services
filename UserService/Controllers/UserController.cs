@@ -17,7 +17,7 @@ namespace UserService.Controllers
 
         private readonly JwtSigner _signer;
 
-        public UserController(UserDbContext dbContext, JwtSigner signer)
+        public UserController(UserDbContext dbContext, JwtSigner signer, ILogger<UserController> logger)
         {
             _repository = new UserRepository(dbContext);
             _signer = signer;
