@@ -1,3 +1,4 @@
+using AuthService.Data.DTO;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using UserService.Data;
@@ -24,8 +25,20 @@ namespace UserService.Controllers
             User user = _repository.GetById(Guid.Parse(id));
             return new UserInfo() {
                 Id = user.Id,
-                Nickname = user.Nickname,
+                Login = user.Login,
                 Email = user.Email
+            };
+        }
+
+        [HttpPost("check")]
+        public UserExistenceInfo Check(UserEmailLoginInfo info)
+        {
+            User? UserByEmail = _repository.GetByEmail(info.Email);
+            User? UserByLogin = _repository.GetByLogin(info.Login);
+            return new UserExistenceInfo()
+            {
+                LoginExists = UserByLogin != null,
+                EmailExists = UserByEmail != null
             };
         }
 
@@ -34,7 +47,7 @@ namespace UserService.Controllers
         {
             Hashing.HashResult hash = Hashing.Create(info.Password);
             User user = new User() {
-                Nickname = info.Nickname,
+                Login = info.Login,
                 Email = info.Email,
                 PasswordHash = hash.Hash,
                 PasswordSalt = hash.Salt

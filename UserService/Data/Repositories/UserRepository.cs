@@ -14,6 +14,14 @@ namespace UserService.Repositoroes
         {
             return _context.Users.Where(x => x.Id == id).FirstOrDefault()!;
         }
+        public User? GetByLogin(string login)
+        {
+            return _context.Users.Where(x => x.Login == login).FirstOrDefault();
+        }
+        public User? GetByEmail(string email)
+        {
+            return _context.Users.Where(x => x.Email == email).FirstOrDefault();
+        }
         public void Create(User user)
         {
             _context.Users.Add(user);
