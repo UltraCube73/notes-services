@@ -17,11 +17,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
     };
-    options.Events.OnMessageReceived = context =>
-    {
-        if (context.Request.Cookies.ContainsKey("X-Access-Token")) context.Token = context.Request.Cookies["X-Access-Token"];
-        return Task.CompletedTask;
-    };
+    //options.Events.OnMessageReceived = context =>
+    //{
+    //    if (context.Request.Cookies.ContainsKey("X-Access-Token")) context.Token = context.Request.Cookies["X-Access-Token"];
+    //    return Task.CompletedTask;
+    //};
 });
 
 builder.WebHost.UseWebRoot("wwwroot").UseStaticWebAssets();

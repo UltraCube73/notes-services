@@ -37,8 +37,10 @@ namespace UserService.Controllers
         [HttpPost("check")]
         public UserExistenceInfo Check(UserEmailLoginInfo info)
         {
-            User? UserByEmail = _repository.GetByEmail(info.Email);
-            User? UserByLogin = _repository.GetByLogin(info.Login);
+            User? UserByEmail = null;
+            User? UserByLogin = null;
+            if(info.Email != null) UserByEmail = _repository.GetByEmail(info.Email);
+            if(info.Login != null) UserByLogin = _repository.GetByLogin(info.Login);
             return new UserExistenceInfo()
             {
                 LoginExists = UserByLogin != null,

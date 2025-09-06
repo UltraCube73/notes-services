@@ -8,10 +8,14 @@ namespace UserService.Data
     public class JwtSigner
     {
         private readonly SymmetricSecurityKey key;
-        
-        public JwtSigner(string key)
+        private readonly string issuer;
+        private readonly string audience;
+
+        public JwtSigner(string key, string issuer, string audience)
         {
             this.key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+            this.issuer = issuer;
+            this.audience = audience;
         }
 
         public string Create(Guid id)
@@ -19,7 +23,9 @@ namespace UserService.Data
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor()
             {
-                Subject = new ClaimsIdentity(new [] { new Claim(ClaimTypes.Name, id.ToString())}),
+                Issuer = issuer,
+                Audience = audience,
+                Subject = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, id.ToString()) }),
                 SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature)
             };
             return tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
