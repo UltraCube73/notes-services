@@ -21,16 +21,20 @@ namespace AuthService.Data
             return await response.Content.ReadFromJsonAsync<UserExistenceInfo>();
         }
 
-        public async Task<ApiQueryResult> Login(UserLoginInfo user)
+        public async Task<UserLoginResultInfo> Login(UserSigninInfo user)
         {
-            return new ApiQueryResult(true);
+            Uri uri = new Uri(new Uri(url), "login");
+            HttpResponseMessage response = await client.PostAsJsonAsync(uri, user);
+            if(response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception($"API service {uri} returned status code {((int)response.StatusCode)}.");
+            return await response.Content.ReadFromJsonAsync<UserLoginResultInfo>();
         }
 
-        public async Task Register(UserRegistrationInfo user)
+        public async Task<UserLoginResultInfo> Register(UserRegistrationInfo user)
         {
             Uri uri = new Uri(new Uri(url), "register");
             HttpResponseMessage response = await client.PostAsJsonAsync(uri, user);
             if(response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception($"API service {uri} returned status code {((int)response.StatusCode)}.");
+            return await response.Content.ReadFromJsonAsync<UserLoginResultInfo>();
         }
     }
 }

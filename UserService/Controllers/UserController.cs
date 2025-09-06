@@ -1,6 +1,7 @@
+using System.IdentityModel.Tokens.Jwt;
 using AuthService.Data.DTO;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using UserService.Data;
 using UserService.Data.DTO;
 using UserService.Data.Model;
@@ -14,9 +15,12 @@ namespace UserService.Controllers
     {
         private readonly UserRepository _repository;
 
-        public UserController(UserDbContext dbContext)
+        private readonly JwtSigner _signer;
+
+        public UserController(UserDbContext dbContext, JwtSigner signer)
         {
             _repository = new UserRepository(dbContext);
+            _signer = signer;
         }
 
         [HttpGet]
@@ -43,7 +47,7 @@ namespace UserService.Controllers
         }
 
         [HttpPost("register")]
-        public IActionResult Register(UserRegistrationInfo info)
+        public UserLoginResultInfo Register(UserRegistrationInfo info)
         {
             Hashing.HashResult hash = Hashing.Create(info.Password);
             User user = new User() {
@@ -53,7 +57,20 @@ namespace UserService.Controllers
                 PasswordSalt = hash.Salt
             };
             _repository.Create(user);
-            return Ok();
+            return new UserLoginResultInfo() { IsSuccessful = true, Token = _signer.Create(user.Id) };
+        }
+
+        [HttpPost("login")]
+        public UserLoginResultInfo Login(UserSigninInfo info)
+        {
+            User? user = _repository.GetByEmail(info.Email);
+            if(user == null) return new UserLoginResultInfo() { IsSuccessful = false };
+            bool isValid = Hashing.Verify(info.Password, user.PasswordHash, user.PasswordSalt);
+            if(isValid)
+            {
+                return new UserLoginResultInfo() { IsSuccessful = true, Token = _signer.Create(user.Id) };
+            }
+            else return new UserLoginResultInfo() { IsSuccessful = false };
         }
     }
 }

@@ -42,13 +42,14 @@ public class HomeController : Controller
         if(data.Password != data.PasswordRepeat) data.Message = "Пароли не совпадают!";
         else
         {
-            UserExistenceInfo userExistenceInfo = await _apiClient.CheckIfUserExists(new UserEmailLoginInfo() { Email = data.Email, Login = data.Login });
+            UserExistenceInfo userExistenceInfo = await _apiClient.CheckIfUserExists(new UserEmailLoginInfo() { Email = data.Email!, Login = data.Login! });
             if(userExistenceInfo.LoginExists) data.Message = "Логин занят!";
             if(userExistenceInfo.EmailExists) data.Message = "Почта уже зарегистрирована!";
             else
             {
-                await _apiClient.Register(new UserRegistrationInfo() { Email = data.Email, Password = data.Password, Login = data.Login });
+                UserLoginResultInfo info = await _apiClient.Register(new UserRegistrationInfo() { Email = data.Email!, Password = data.Password!, Login = data.Login! });
                 data.Message = "Регистрация прошла успешно.";
+                Response.Cookies.Append("X-Access-Token", info.Token!, new CookieOptions() { SameSite = SameSiteMode.Strict });
                 return View(data);
             }
             return View(data);

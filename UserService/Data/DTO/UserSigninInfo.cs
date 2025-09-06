@@ -1,6 +1,6 @@
-namespace AuthService.Data.DTO
+namespace UserService.Data.DTO
 {
-    public class UserLoginInfo
+    public class UserSigninInfo
     {
         public required string Email { get; set; }
         public required string Password { get; set; }
