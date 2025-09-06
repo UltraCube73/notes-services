@@ -13,13 +13,13 @@ namespace AuthService.Data
             url = apiUrl;
         }
 
-        public async Task<ApiQueryResult> CheckIfUserExists(User user)
+        public async Task<ApiQueryResult> CheckIfUserExists(UserEmailLoginInfo user)
         {
             //HttpResponseMessage response = await client.GetAsync(new Uri(url, ""));
             return new ApiQueryResult(true);
         }
 
-        public async Task<ApiQueryResult> Login(User user)
+        public async Task<ApiQueryResult> Login(UserLoginInfo user)
         {
             return new ApiQueryResult(true);
         }

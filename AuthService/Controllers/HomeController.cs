@@ -43,7 +43,7 @@ public class HomeController : Controller
             data.Message = "Пароли не совпадают!";
             return View(data);
         }
-        ApiQueryResult result = await _apiClient.Register(new UserRegistrationInfo() { Email = data.Email, Password = data.Password, Nickname = data.Login });
+        ApiQueryResult result = await _apiClient.Register(new UserRegistrationInfo() { Email = data.Email, Password = data.Password, Login = data.Login });
         if(result.isSuccessful) data.Message = "Успешно";
         else data.Message = "Фигово";
         return View(data);
