@@ -38,14 +38,21 @@ public class HomeController : Controller
     [HttpPost]
     public async Task<IActionResult> Register(Data.Models.Views.Register data)
     {
-        if(data.Password != data.PasswordRepeat)
+        if(data.Email == null || data.Login == null || data.Password == null || data.PasswordRepeat == null) data.Message = "Данные не заполнены!";
+        if(data.Password != data.PasswordRepeat) data.Message = "Пароли не совпадают!";
+        else
         {
-            data.Message = "Пароли не совпадают!";
+            UserExistenceInfo userExistenceInfo = await _apiClient.CheckIfUserExists(new UserEmailLoginInfo() { Email = data.Email, Login = data.Login });
+            if(userExistenceInfo.LoginExists) data.Message = "Логин занят!";
+            if(userExistenceInfo.EmailExists) data.Message = "Почта уже зарегистрирована!";
+            else
+            {
+                await _apiClient.Register(new UserRegistrationInfo() { Email = data.Email, Password = data.Password, Login = data.Login });
+                data.Message = "Регистрация прошла успешно.";
+                return View(data);
+            }
             return View(data);
         }
-        ApiQueryResult result = await _apiClient.Register(new UserRegistrationInfo() { Email = data.Email, Password = data.Password, Login = data.Login });
-        if(result.isSuccessful) data.Message = "Успешно";
-        else data.Message = "Фигово";
         return View(data);
     }
 

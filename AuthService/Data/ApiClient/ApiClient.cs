@@ -13,10 +13,12 @@ namespace AuthService.Data
             url = apiUrl;
         }
 
-        public async Task<ApiQueryResult> CheckIfUserExists(UserEmailLoginInfo user)
+        public async Task<UserExistenceInfo> CheckIfUserExists(UserEmailLoginInfo user)
         {
-            //HttpResponseMessage response = await client.GetAsync(new Uri(url, ""));
-            return new ApiQueryResult(true);
+            Uri uri = new Uri(new Uri(url), "check");
+            HttpResponseMessage response = await client.PostAsJsonAsync(uri, user);
+            if(response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception($"API service {uri} returned status code {((int)response.StatusCode)}.");
+            return await response.Content.ReadFromJsonAsync<UserExistenceInfo>();
         }
 
         public async Task<ApiQueryResult> Login(UserLoginInfo user)
@@ -24,13 +26,11 @@ namespace AuthService.Data
             return new ApiQueryResult(true);
         }
 
-        public async Task<ApiQueryResult> Register(UserRegistrationInfo user)
+        public async Task Register(UserRegistrationInfo user)
         {
             Uri uri = new Uri(new Uri(url), "register");
-            HttpResponseMessage response;
-            response = await client.PostAsJsonAsync(uri, user);
-            if(response.StatusCode == System.Net.HttpStatusCode.OK) return new ApiQueryResult(true);
-            else throw new Exception($"API service {uri} returned status code {((int)response.StatusCode)}.");
+            HttpResponseMessage response = await client.PostAsJsonAsync(uri, user);
+            if(response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception($"API service {uri} returned status code {((int)response.StatusCode)}.");
         }
     }
 }
