@@ -11,6 +11,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddSingleton(x => new JwtSigner(builder.Configuration["Jwt:Key"]!, builder.Configuration["Jwt:Issuer"]!, builder.Configuration["Jwt:Audience"]!));
 
+/*
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters()
@@ -23,6 +24,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
     };
 });
+*/
 
 builder.Services.AddDbContextPool<UserDbContext>(opt => 
     opt.UseNpgsql(builder.Configuration.GetConnectionString("UserDatabase")));

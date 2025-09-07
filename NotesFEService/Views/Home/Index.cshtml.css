@@ -1,0 +1,71 @@
+.container {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.status-header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
+.status-text {
+  text-align: center;
+}
+
+.categories {
+  border: 2px;
+  border-radius: 15px;
+  border-style: solid;
+  border-color: black;
+  padding: 5px;
+  margin-right: 10px;
+}
+
+button, input[type=submit] {
+  background-color: skyblue;
+  color: black;
+  border-radius: 15px;
+  border: 2px solid black;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  height: 30px;
+}
+
+.submit-input {
+  width: 30px;
+  height: 30px;
+}
+
+.link-button {
+  width: 100%;
+}
+
+.notes {
+  width: 300px;
+  border: 2px;
+  border-radius: 15px;
+  border-style: solid;
+  border-color: black;
+  padding: 5px;
+}
+
+.note-container {
+  border: 2px;
+  border-radius: 15px;
+  border-style: dashed;
+  border-color: black;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.notes-list {
+  display: inline-block !important;
+  width: 100%;
+  max-height: 400px;
+  margin-bottom: 5px;
+  overflow-y: scroll;
+}

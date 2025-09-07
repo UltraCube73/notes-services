@@ -40,9 +40,7 @@ services:
     hostname: user-service
     volumes:
       - ./config/UserServiceSettings.json:/app/appsettings.json:ro
-      - dpkeys-user:/app/keys
 
 volumes:
   notes-data:
   dpkeys-notes:
-  dpkeys-user:

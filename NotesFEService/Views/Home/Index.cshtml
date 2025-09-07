@@ -1,8 +1,56 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@page
+@model NotesFEService.Data.Models.Views.Index
+@removeTagHelper Microsoft.AspNetCore.Mvc.Razor.TagHelpers.AnchorTagHelper, Microsoft.AspNetCore.Mvc.Razor
+
+@section Scripts
+{
+  <script>
+    $(function () {
+      $("#CurrentCategory").on("change", function () {
+        $("#changeCurrent").click();
+      });
+    });
+  </script>
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@{
+  var optionsVisibility = "";
+  if(Model.HasOptions) optionsVisibility = "inline";
+  else optionsVisibility = "none";
+
+  var notesVisibility = "";
+  if(Model.Notes.Count != 0) notesVisibility = "inline";
+  else notesVisibility = "none";
+
+  var statusVisibility = "";
+  if(Model.StatusMessage != "") statusVisibility = "inline";
+  else statusVisibility = "none";
+}
+
+<div class="status-header" style="display: @(statusVisibility)">
+  <p class="status-text">@Model.StatusMessage</p>
+</div>
+<div class="container">
+  <div class="categories">
+    <form method="post">
+      <input asp-for="NewCategoryName" class="line-input" value="" placeholder="Новая категория..."/>
+      <input type="submit" class="submit-input" value="+"/>
+    </form>
+    <form method="get" style="margin-top: 5px;">
+      <select asp-for="CurrentCategory" class="form-select" asp-items="Model.Options"></select>
+      <input id="changeCurrent" type="submit" style="display: none"/>
+    </form>
+    <button class="link-button" style="display: @(optionsVisibility); margin-top: 5px;">
+      <a asp-page-handler="DeleteCategory" asp-route-id="@Model.CurrentCategory" class="inner-link">Удалить категорию</a>
+    </button>
+  </div>
+  <div class="notes" style="display: @(optionsVisibility)">
+    <div class="notes-list" style="display: @(notesVisibility)">
+      @foreach(Models.Note x in Model.Notes)
+      {<div class="note-container"><a class="note-link" asp-page="/Notes/Edit" asp-route-noteid="@(x.Id)">@(x.Text)</a></div>}
+    </div>
+    <button class="link-button" style="display: @(optionsVisibility)">
+      <a asp-page="/Notes/Edit" class="inner-link" asp-route-categoryid="@(Model.CurrentCategory)">Создать заметку</a>
+    </button>
+  </div>
 </div>

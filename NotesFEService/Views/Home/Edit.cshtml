@@ -1,0 +1,26 @@
+@page
+@model NotesFEService.Data.Models.Views.Edit
+
+@{
+  var deletionVisibility = "";
+  if(Model.IsExisting) deletionVisibility = "inline";
+  else deletionVisibility = "none";
+
+  var statusVisibility = "";
+  if(Model.StatusMessage != "") statusVisibility = "inline";
+  else statusVisibility = "none";
+}
+
+<div class="status-header" style="display: @(statusVisibility)">
+  <p class="status-text">@Model.StatusMessage</p>
+</div>
+<div class="container">
+  <form method="post">
+    <textarea class="text-input" asp-for="NoteText"></textarea>
+    <div class="buttons-container">
+      <button class="form-button"><a class="inner-link" asp-page="/Notes/Index">Назад</a></button>
+      <button class="form-button" style="display: @(deletionVisibility)"><a asp-page-handler="DeleteNote", asp-route-noteid="@Model.NoteID" class="inner-link" >Удалить</a></button>
+      <input type="submit" class="form-button" value="Сохранить"/>
+    </div>
+  </form>
+</div>
