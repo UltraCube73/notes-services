@@ -41,5 +41,17 @@ namespace NotesFEService.Data.ApiClient
             HttpResponseMessage response = await client.PostAsJsonAsync(uri, new CategoryId() { id = id });
             if(response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception($"API service {uri} returned status code {(int)response.StatusCode}.");
         }
+
+        public async Task<List<Note>> GetNotes(string categoryId)
+        {
+            UriBuilder builder = new UriBuilder(new Uri(new Uri(url), "Note/by-category"));
+            NameValueCollection query = HttpUtility.ParseQueryString(builder.Query);
+            query["id"] = categoryId;
+            builder.Query = query.ToString();
+            Uri uri = builder.Uri;
+            HttpResponseMessage response = await client.GetAsync(uri);
+            if(response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception($"API service {uri} returned status code {(int)response.StatusCode}.");
+            return await response.Content.ReadFromJsonAsync<List<Note>>();
+        }
     }
 }

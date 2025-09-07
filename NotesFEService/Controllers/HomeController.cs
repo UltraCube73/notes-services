@@ -26,7 +26,7 @@ namespace NotesFEService.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(Data.Models.Views.Index? data, string? CurrentCategory)
         {
-            Data.Models.User? user = await _userapi.GetUser(User.Identity.Name);
+            User? user = await _userapi.GetUser(User.Identity.Name);
             if(user == null) return Unauthorized();
 
             CategoryInfo categoryInfo = await GenerateSelectList(user.Id);
@@ -37,6 +37,14 @@ namespace NotesFEService.Controllers
                 data.Options = categoryInfo.Options;
                 data.HasOptions = categoryInfo.HasOptions;
             }
+            if(CurrentCategory != null) data.CurrentCategory = CurrentCategory;
+            else
+            {
+                data.CurrentCategory = categoryInfo.Options[0].Value;
+                RouteData.Values.Add("CurrentCategory", data.CurrentCategory);
+            }
+
+            if(data.HasOptions) data.Notes = await _notesapi.GetNotes(data.CurrentCategory);
             return View(data);
         }
 
@@ -59,8 +67,11 @@ namespace NotesFEService.Controllers
             await _notesapi.CreateCategory(category);
 
             CategoryInfo categoryInfo = await GenerateSelectList(user.Id);
+            data.User = user;
             data.Options = categoryInfo.Options;
             data.HasOptions = categoryInfo.HasOptions;
+
+            if(data.HasOptions) data.Notes = await _notesapi.GetNotes(categoryInfo.Options[0].Value);
 
             return View(data);
         }
@@ -75,11 +86,14 @@ namespace NotesFEService.Controllers
             if(category != null) await _notesapi.DeleteCategory(id);
 
             CategoryInfo categoryInfo = await GenerateSelectList(user.Id);
+            data.User = user;
             data.Options = categoryInfo.Options;
             data.HasOptions = categoryInfo.HasOptions;
             data.CurrentCategory = categoryInfo.Options[0].Value;
 
-            return View(data);
+            if(data.HasOptions) data.Notes = await _notesapi.GetNotes(data.CurrentCategory);
+
+            return RedirectToAction("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
