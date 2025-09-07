@@ -10,9 +10,9 @@ namespace UserService.Repositoroes
         {
             _context = context;
         }
-        public User GetById(Guid id)
+        public User? GetById(Guid id)
         {
-            return _context.Users.Where(x => x.Id == id).FirstOrDefault()!;
+            return _context.Users.Where(x => x.Id == id).FirstOrDefault();
         }
         public User? GetByLogin(string login)
         {

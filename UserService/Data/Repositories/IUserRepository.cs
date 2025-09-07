@@ -4,7 +4,7 @@ namespace UserService.Repositoroes
 {
     public interface IUserRepository
     {
-        public User GetById(Guid id);
+        public User? GetById(Guid id);
         public User? GetByLogin(string login);
         public User? GetByEmail(string email);
         public void Create(User user);

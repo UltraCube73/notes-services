@@ -1,4 +1,3 @@
-@page
 @model NotesFEService.Data.Models.Views.Index
 @removeTagHelper Microsoft.AspNetCore.Mvc.Razor.TagHelpers.AnchorTagHelper, Microsoft.AspNetCore.Mvc.Razor
 
@@ -14,6 +13,8 @@
 }
 
 @{
+  ViewData["Title"] = "Заметки";
+  
   var optionsVisibility = "";
   if(Model.HasOptions) optionsVisibility = "inline";
   else optionsVisibility = "none";
@@ -46,7 +47,7 @@
   </div>
   <div class="notes" style="display: @(optionsVisibility)">
     <div class="notes-list" style="display: @(notesVisibility)">
-      @foreach(Models.Note x in Model.Notes)
+      @foreach(NotesFEService.Data.Models.Note x in Model.Notes)
       {<div class="note-container"><a class="note-link" asp-page="/Notes/Edit" asp-route-noteid="@(x.Id)">@(x.Text)</a></div>}
     </div>
     <button class="link-button" style="display: @(optionsVisibility)">

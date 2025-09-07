@@ -2,8 +2,8 @@ namespace UserService.Data.DTO
 {
     public class UserInfo
     {
-        public required Guid Id { get; set; }
-        public required string Login { get; set; }
-        public required string Email { get; set; }
+        public Guid? Id { get; set; }
+        public string? Login { get; set; }
+        public string? Email { get; set; }
     }
 }

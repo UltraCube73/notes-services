@@ -27,7 +27,7 @@ public class HomeController : Controller
     [HttpPost]
     public async Task<IActionResult> Index(Data.Models.Views.Index data)
     {
-        if(data.Email != null) data.Email = data.Email.Trim();
+        if(data.Email != null) data.Email = data.Email.Trim().ToLower();
         if (data.Email == null || data.Password == null || data.Email == "" || data.Password == "")
         {
             data.Message = "Данные не заполнены!";

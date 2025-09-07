@@ -26,12 +26,13 @@ namespace UserService.Controllers
         [HttpGet]
         public UserInfo Get(string id)
         {
-            User user = _repository.GetById(Guid.Parse(id));
-            return new UserInfo() {
+            User? user = _repository.GetById(Guid.Parse(id));
+            if(user != null) return new UserInfo() {
                 Id = user.Id,
                 Login = user.Login,
                 Email = user.Email
             };
+            else return new UserInfo();
         }
 
         [HttpPost("check")]
