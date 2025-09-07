@@ -32,6 +32,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 builder.WebHost.UseWebRoot("wwwroot").UseStaticWebAssets();
 
 builder.Services.AddSingleton<IUserApiClient>(x => new UserApiClient(builder.Configuration["UserApiBaseUrl"]!));
+builder.Services.AddSingleton<INotesApiClient>(x => new NotesApiClient(builder.Configuration["NotesApiBaseUrl"]!));
 
 var app = builder.Build();
 

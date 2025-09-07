@@ -11,21 +11,6 @@ builder.Services.AddControllers();
 
 builder.Services.AddSingleton(x => new JwtSigner(builder.Configuration["Jwt:Key"]!, builder.Configuration["Jwt:Issuer"]!, builder.Configuration["Jwt:Audience"]!));
 
-/*
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters()
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
-    };
-});
-*/
-
 builder.Services.AddDbContextPool<UserDbContext>(opt => 
     opt.UseNpgsql(builder.Configuration.GetConnectionString("UserDatabase")));
 

@@ -30,6 +30,9 @@ services:
     volumes:
       - ./config/NotesServiceSettings.json:/app/appsettings.json:ro
       - dpkeys-notes:/app/keys
+    depends_on:
+      database:
+        condition: service_started
   notes-fe-service:
     build: ./NotesFEService
     hostname: notes-fe-service
@@ -40,6 +43,9 @@ services:
     hostname: user-service
     volumes:
       - ./config/UserServiceSettings.json:/app/appsettings.json:ro
+    depends_on:
+      database:
+        condition: service_started
 
 volumes:
   notes-data:

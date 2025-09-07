@@ -13,7 +13,7 @@ namespace UserService.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly UserRepository _repository;
+        private readonly IUserRepository _repository;
 
         private readonly JwtSigner _signer;
 

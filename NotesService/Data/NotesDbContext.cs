@@ -19,11 +19,12 @@ namespace NotesService.Data
             modelBuilder.Entity<Category>().HasKey(x => x.Id);
             modelBuilder.Entity<Category>().Property(x => x.Name).IsRequired();
             modelBuilder.Entity<Category>().Property(x => x.OwnerId).IsRequired();
-            modelBuilder.Entity<Category>().HasIndex(x => x.Name);
 
             modelBuilder.Entity<Note>().HasKey(x => x.Id);
-            modelBuilder.Entity<Note>().Property(x => x.Category).IsRequired();
+            modelBuilder.Entity<Note>().Property(x => x.CategoryId).IsRequired();
             modelBuilder.Entity<Note>().Property(x => x.Text).IsRequired();
+
+            modelBuilder.Entity<Note>().HasOne(x => x.Category).WithMany(x => x.Notes).HasForeignKey(x => x.CategoryId);
 
             modelBuilder.Entity<Category>(model =>
             {
@@ -35,5 +36,8 @@ namespace NotesService.Data
                 model.Property(x => x.Text).HasColumnType("bytea").HasConversion(new EncryptedConverter(dataProtectionProvider));
             });
         }
+
+        public DbSet<Note> Notes { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }

@@ -42,7 +42,7 @@
       <input id="changeCurrent" type="submit" style="display: none"/>
     </form>
     <button class="link-button" style="display: @(optionsVisibility); margin-top: 5px;">
-      <a asp-page-handler="DeleteCategory" asp-route-id="@Model.CurrentCategory" class="inner-link">Удалить категорию</a>
+      <a asp-action="Delete" asp-route-id="@Model.CurrentCategory" class="inner-link">Удалить категорию</a>
     </button>
   </div>
   <div class="notes" style="display: @(optionsVisibility)">
