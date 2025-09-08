@@ -1,0 +1,18 @@
+{
+  "UserApiBaseUrl": "http://user-service:5020/User/",
+  "PathBase": "/AuthService",
+  "Kestrel": {
+    "EndPoints": {
+      "Https": {
+        "Url": "http://0.0.0.0:5010"
+      }
+    }
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}

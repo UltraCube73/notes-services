@@ -1,0 +1,24 @@
+{
+  "UserApiBaseUrl": "http://user-service:5020/User/",
+  "NotesApiBaseUrl": "http://notes-service:5040/",
+  "PathBase": "/NotesFEService",
+  "Kestrel": {
+    "EndPoints": {
+      "Https": {
+        "Url": "http://0.0.0.0:5030"
+      }
+    }
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "Jwt": {
+    "Issuer": "http://localhost:5000",
+    "Audience": "http://localhost:5000",
+    "Key": "uXdTftQXhGsXWbGAESg6uruv8fE2pLbQ"
+  }
+}

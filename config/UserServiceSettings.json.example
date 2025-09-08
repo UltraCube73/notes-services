@@ -1,0 +1,24 @@
+{
+  "Kestrel": {
+    "EndPoints": {
+      "Https": {
+        "Url": "http://0.0.0.0:5020"
+      }
+    }
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "UserDatabase": "Host=notes-database;Username=postgres;Password=VeryCoolPassword1234;Database=UserData;"
+  },
+  "Jwt": {
+    "Issuer": "http://localhost:5000",
+    "Audience": "http://localhost:5000",
+    "Key": "VeryLongTopSecretKey1234"
+  }
+}

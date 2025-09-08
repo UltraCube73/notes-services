@@ -1,0 +1,19 @@
+{
+  "Kestrel": {
+    "EndPoints": {
+      "Https": {
+        "Url": "http://0.0.0.0:5040"
+      }
+    }
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "NotesDatabase": "Host=notes-database;Username=postgres;Password=VeryCoolPassword1234;Database=NotesData;"
+  }
+}
