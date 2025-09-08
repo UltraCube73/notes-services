@@ -1,4 +1,3 @@
-@page
 @model NotesFEService.Data.Models.Views.Edit
 
 @{
@@ -19,7 +18,7 @@
     <textarea class="text-input" asp-for="NoteText"></textarea>
     <div class="buttons-container">
       <button class="form-button"><a class="inner-link" asp-page="/Notes/Index">Назад</a></button>
-      <button class="form-button" style="display: @(deletionVisibility)"><a asp-page-handler="DeleteNote", asp-route-noteid="@Model.NoteID" class="inner-link" >Удалить</a></button>
+      <button class="form-button" style="display: @(deletionVisibility)"><a asp-action="Delete" asp-route-categoryId="@Model.categoryId" asp-route-noteId="@Model.NoteId" class="inner-link" >Удалить</a></button>
       <input type="submit" class="form-button" value="Сохранить"/>
     </div>
   </form>

@@ -30,9 +30,9 @@ namespace NotesService.Controllers
         }
 
         [HttpPost("create")]
-        public IActionResult Create(Note note)
+        public IActionResult Create(NoteCreationInfo note)
         {
-            _noteRepo.Create(note);
+            _noteRepo.Create(new Note() { Text = note.Text, CategoryId = note.CategoryId });
             return Ok();
         }
 
@@ -46,6 +46,8 @@ namespace NotesService.Controllers
         [HttpPost("delete")]
         public IActionResult Delete(NoteId noteId)
         {
+            Console.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            Console.WriteLine(noteId.Id);
             _noteRepo.Delete(noteId.Id);
             return Ok();
         }

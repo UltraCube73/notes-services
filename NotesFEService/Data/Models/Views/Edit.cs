@@ -4,10 +4,12 @@ namespace NotesFEService.Data.Models.Views
     {
         public string NoteText { get; set; } = "";
 
-        public string? NoteID { get; set; } = null;
+        public string? NoteId { get; set; } = null;
 
         public bool IsExisting { get; set; }
 
         public string StatusMessage { get; set; } = "";
+
+        public string categoryId { get; set; } = "";
     }
 }

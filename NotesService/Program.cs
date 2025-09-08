@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.DataProtection;
 using NotesService.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 builder.Services.AddDbContextPool<NotesDbContext>(opt => 
   opt.UseNpgsql(builder.Configuration.GetConnectionString("NotesDatabase")));

@@ -55,10 +55,16 @@ namespace NotesFEService.Controllers
             User? user = await _userapi.GetUser(User.Identity.Name);
             if(user == null) return Unauthorized();
 
+            CategoryInfo categoryInfo;
+
             if (data.NewCategoryName == null || data.NewCategoryName.Trim() == "" || data.NewCategoryName.Count() >= 15)
             {
                 if (data.NewCategoryName == null || data.NewCategoryName.Trim() == "") data.StatusMessage = "В названии категории должен быть текст";
                 else data.StatusMessage = "Максимальная длина названия категории - 15 символов";
+                categoryInfo = await GenerateSelectList(user.Id);
+                data.User = user;
+                data.Options = categoryInfo.Options;
+                data.HasOptions = categoryInfo.HasOptions;
                 return View(data);
             }
 
@@ -66,7 +72,7 @@ namespace NotesFEService.Controllers
 
             await _notesapi.CreateCategory(category);
 
-            CategoryInfo categoryInfo = await GenerateSelectList(user.Id);
+            categoryInfo = await GenerateSelectList(user.Id);
             data.User = user;
             data.Options = categoryInfo.Options;
             data.HasOptions = categoryInfo.HasOptions;
@@ -76,6 +82,7 @@ namespace NotesFEService.Controllers
             return View(data);
         }
 
+        [Authorize]
         public async Task<IActionResult> Delete(Data.Models.Views.Index data, string id)
         {
             User? user = await _userapi.GetUser(User.Identity.Name);

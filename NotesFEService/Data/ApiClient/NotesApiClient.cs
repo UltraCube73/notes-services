@@ -53,5 +53,19 @@ namespace NotesFEService.Data.ApiClient
             if(response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception($"API service {uri} returned status code {(int)response.StatusCode}.");
             return await response.Content.ReadFromJsonAsync<List<Note>>();
         }
+
+        public async Task CreateNote(NoteCreationInfo note)
+        {
+            Uri uri = new Uri(new Uri(url), "Note/create");
+            HttpResponseMessage response = await client.PostAsJsonAsync(uri, note);
+            if(response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception($"API service {uri} returned status code {(int)response.StatusCode}.");
+        }
+
+        public async Task UpdateNote(Note note)
+        {
+            Uri uri = new Uri(new Uri(url), "Note/update");
+            HttpResponseMessage response = await client.PostAsJsonAsync(uri, new NoteId() { Id = note.Id.ToString() });
+            if(response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception($"API service {uri} returned status code {(int)response.StatusCode}.");
+        }
     }
 }

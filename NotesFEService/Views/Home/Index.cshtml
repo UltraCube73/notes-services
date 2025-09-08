@@ -1,5 +1,4 @@
 @model NotesFEService.Data.Models.Views.Index
-@removeTagHelper Microsoft.AspNetCore.Mvc.Razor.TagHelpers.AnchorTagHelper, Microsoft.AspNetCore.Mvc.Razor
 
 @section Scripts
 {
@@ -48,10 +47,10 @@
   <div class="notes" style="display: @(optionsVisibility)">
     <div class="notes-list" style="display: @(notesVisibility)">
       @foreach(NotesFEService.Data.Models.Note x in Model.Notes)
-      {<div class="note-container"><a class="note-link" asp-page="/Notes/Edit" asp-route-noteid="@(x.Id)">@(x.Text)</a></div>}
+      {<div class="note-container"><a class="note-link" asp-controller="Edit" asp-action="Index" asp-route-categoryid="@(Model.CurrentCategory)" asp-route-noteid="@(x.Id)">@(x.Text)</a></div>}
     </div>
     <button class="link-button" style="display: @(optionsVisibility)">
-      <a asp-page="/Notes/Edit" class="inner-link" asp-route-categoryid="@(Model.CurrentCategory)">Создать заметку</a>
+      <a asp-controller="Edit" asp-action="Index" class="inner-link" asp-route-categoryid="@(Model.CurrentCategory)">Создать заметку</a>
     </button>
   </div>
 </div>
