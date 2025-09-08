@@ -33,7 +33,7 @@ namespace NotesFEService.Controllers
             Category? category = (await _notesapi.GetCategories(user.Id.ToString())).Where(x => x.Id == new Guid(categoryId)).FirstOrDefault();
             if(category == null) return Unauthorized();
 
-            if(data == null) data = new Edit() { };
+            if(data == null) data = new Edit() { User = user };
 
             if (noteId != null)
             {
@@ -42,6 +42,8 @@ namespace NotesFEService.Controllers
                 data.NoteText = note.Text;
                 data.IsExisting = true;
             }
+
+            data.User = user;
 
             data.categoryId = categoryId;
             return View(data);
@@ -78,7 +80,7 @@ namespace NotesFEService.Controllers
             Note? note = (await _notesapi.GetNotes(categoryId)).Where(x => x.Id == new Guid(noteId)).FirstOrDefault();
             if(note == null) return Unauthorized();
 
-            await _notesapi.DeleteCategory(note.Id.ToString());
+            await _notesapi.DeleteNote(new NoteId() { Id = note.Id.ToString() });
 
             return RedirectToAction("Index", "Home", new { CurrentCategory = categoryId });
         }

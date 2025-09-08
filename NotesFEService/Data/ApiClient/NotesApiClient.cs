@@ -64,6 +64,13 @@ namespace NotesFEService.Data.ApiClient
         public async Task UpdateNote(Note note)
         {
             Uri uri = new Uri(new Uri(url), "Note/update");
+            HttpResponseMessage response = await client.PostAsJsonAsync(uri, new Note() { Id = note.Id, Text = note.Text, CategoryId = note.CategoryId });
+            if(response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception($"API service {uri} returned status code {(int)response.StatusCode}.");
+        }
+
+        public async Task DeleteNote(NoteId note)
+        {
+            Uri uri = new Uri(new Uri(url), "Note/delete");
             HttpResponseMessage response = await client.PostAsJsonAsync(uri, new NoteId() { Id = note.Id.ToString() });
             if(response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception($"API service {uri} returned status code {(int)response.StatusCode}.");
         }

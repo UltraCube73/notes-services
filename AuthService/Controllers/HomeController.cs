@@ -111,6 +111,13 @@ public class HomeController : Controller
         
     }
 
+    [HttpGet]
+    public IActionResult Logout()
+    {
+        Response.Cookies.Delete("X-Access-Token");
+        return Redirect("/");
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

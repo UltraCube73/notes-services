@@ -12,5 +12,6 @@ namespace NotesFEService.Data.ApiClient
         public Task<List<Note>> GetNotes(string categoryId);
         public Task CreateNote(NoteCreationInfo note);
         public Task UpdateNote(Note note);
+        public Task DeleteNote(NoteId note);
     }
 }

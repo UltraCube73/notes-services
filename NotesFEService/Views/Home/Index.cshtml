@@ -13,6 +13,7 @@
 
 @{
   ViewData["Title"] = "Заметки";
+  ViewData["Login"] = Model.User.Login;
   
   var optionsVisibility = "";
   if(Model.HasOptions) optionsVisibility = "inline";

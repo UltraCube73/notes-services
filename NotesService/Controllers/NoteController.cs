@@ -46,8 +46,6 @@ namespace NotesService.Controllers
         [HttpPost("delete")]
         public IActionResult Delete(NoteId noteId)
         {
-            Console.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            Console.WriteLine(noteId.Id);
             _noteRepo.Delete(noteId.Id);
             return Ok();
         }

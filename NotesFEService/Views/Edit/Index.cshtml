@@ -1,6 +1,8 @@
 @model NotesFEService.Data.Models.Views.Edit
 
 @{
+  ViewData["Login"] = Model.User.Login;
+
   var deletionVisibility = "";
   if(Model.IsExisting) deletionVisibility = "inline";
   else deletionVisibility = "none";
