@@ -19,6 +19,6 @@
   "Jwt": {
     "Issuer": "http://localhost:5000",
     "Audience": "http://localhost:5000",
-    "Key": "uXdTftQXhGsXWbGAESg6uruv8fE2pLbQ"
+    "Key": "VeryLongTopSecretKey1234"
   }
 }
